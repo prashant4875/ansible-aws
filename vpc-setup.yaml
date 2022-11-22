@@ -101,7 +101,7 @@
         var: igw_out
 
     - name: Create Route Table for Public subnet
-      amazon.aws.ec2_vpc_route_table:
+      ec2_vpc_route_table:
         vpc_id: "{{vpc_out.vpc.id}}"
         region: "{{region}}"
         state: "{{state}}"
