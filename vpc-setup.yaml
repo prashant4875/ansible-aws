@@ -99,3 +99,19 @@
 
     - debug: 
         var: igw_out
+
+    - name: Create Route Table for Public subnet
+      amazon.aws.ec2_vpc_route_table:
+        vpc_id: "{{vpc_out.vpc.id}}"
+        region: "{{region}}"
+        state: "{{state}}"
+        tags:
+          Name: PubRouteTable_ansible
+        subnets:
+          - "{{PubSub1_out.subnet.id}}"
+          - "{{PubSub2_out.subnet.id}}"
+          - "{{PubSub3_out.subnet.id}}"
+        routes:
+          - dest: 0.0.0.0/0
+            gateway_id: "{{igw_out.gateway_id}}"
+      register: PubRouteTable_ansible_out
