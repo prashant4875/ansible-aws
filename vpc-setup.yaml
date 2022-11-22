@@ -62,7 +62,6 @@
         cidr: "{{PrivSub1Cidr}}"
         region: "{{region}}"
         az: "{{zone1}}"
-        map_public: yes
         tags:
           Name: PrivateSub1
       register: PrivateSub1_out
@@ -74,7 +73,6 @@
         cidr: "{{PrivSub2Cidr}}"
         region: "{{region}}"
         az: "{{zone2}}"
-        map_public: yes
         tags:
           Name: PrivateSub2
       register: PrivateSub2_out
@@ -86,7 +84,6 @@
         cidr: "{{PrivSub3Cidr}}"
         region: "{{region}}"
         az: "{{zone3}}"
-        map_public: yes
         tags:
           Name: PrivateSub3
       register: PrivateSub3_out
