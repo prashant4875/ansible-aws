@@ -123,8 +123,6 @@
         wait: yes
         if_exist_do_not_create: yes
         region: "{{region}}"
-        tags:
-          Name: nat_gateway_ansible
       register: nat_gateway_ansible_out
 
     - name: Create Route Table for Private subnet
