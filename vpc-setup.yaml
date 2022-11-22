@@ -87,3 +87,15 @@
         tags:
           Name: PrivateSub3
       register: PrivateSub3_out
+
+    - name: Create IGW for VPC
+      ec2_vpc_igw:
+        vpc_id: "{{vpc_out.vpc.id}}"
+        state: "{{state}}"
+        region: "{{region}}"
+        tags:
+            Name: ansible-IGW
+      register: igw_out
+
+    - debug: 
+        var: igw_out
