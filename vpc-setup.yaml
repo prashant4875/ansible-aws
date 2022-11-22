@@ -6,7 +6,7 @@
       include_vars: vars/vpc_setup
     
     - name: Create profile vpc
-      amazon.aws.ec2_vpc_net:
+      ec2_vpc_net:
         name: "{{vpc_name}}"
         cidr_block: "{{vpcCidr}}"
         region: "{{region}}"
@@ -14,3 +14,19 @@
         dns_support: yes
         tenancy: default
         state: "{{state}}"
+      register: vpc_out
+    
+    - debug: 
+        var: vpc_out
+    
+    - name: Create Public subnet 1 in Zone 1
+      ec2_vpc_subnet:
+        state: "{{state}}"
+        vpc_id: "{{vpc_out.vpc.id}}"
+        cidr: "{{PubSub1Cidr}}"
+        region: "{{region}}"
+        az: "{{zone1}}"
+        map_public: yes
+        tags:
+          Name: PubSub1
+      register: PubSub1_out
