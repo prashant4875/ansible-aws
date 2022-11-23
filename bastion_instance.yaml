@@ -39,7 +39,6 @@
       
     - name: Bastion server 
       ec2:
-        name: "bastion-instance"
         key_name: bastion_keyPair
         vpc_subnet_id: "{{pubsub1id}}"
         instance_type: t2.micro
@@ -49,7 +48,7 @@
         group_id: "{{bastionSG_out.group_id}}"
         image: "{{bastion_ami}}"
         exact_count: 1
-        tags:
+        instance_tags:
           Name: Bastion-server
         count_tag:
           Name: Bastion-server
