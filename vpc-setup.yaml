@@ -140,3 +140,40 @@
           - dest: 0.0.0.0/0
             gateway_id: "{{nat_gateway_ansible_out.nat_gateway_id}}"
       register: PrivateRouteTable_ansible_out
+
+    - debug: 
+        var: {{item}}
+      loop: 
+        - vpc_out.vpc.id
+        - PubSub1_out.subnet.id
+        - PubSub2_out.subnet.id
+        - PubSub3_out.subnet.id
+        - PrivateSub1_out.subnet.id
+        - PrivateSub2_out.subnet.id
+        - PrivateSub3_out.subnet.id
+        - PubRouteTable_ansible_out.route_table.id
+        - PrivateRouteTable_ansible_out.route_table.id
+        - igw_out.gateway_id
+        - nat_gateway_ansible_out.nat_gateway_id
+
+    - set_fact: 
+        vpcid: "{{vpc_out.vpc.id}}"
+        pubsub1id: "{{PubSub1_out.subnet.id}}"
+        pubsub2id: "{{PubSub2_out.subnet.id}}"
+        pubsub3id: "{{PubSub3_out.subnet.id}}"
+        privatesub1id: "{{PrivateSub1_out.subnet.id}}"
+        privatesub2id: "{{PrivateSub2_out.subnet.id}}"
+        privatesub3id: "{{PrivateSub3_out.subnet.id}}"
+        igwid: "{{igw_out.gateway_id}}"
+        pubRTid: "{{PubRouteTable_ansible_out.route_table.id}}"
+        NATGWid: "{{nat_gateway_ansible_out.nat_gateway_id}}"
+        privateRTid: "{{PrivateRouteTable_ansible_out.route_table.id}}"
+
+    - name: Copy values to a file.
+      copy: 
+        content: "vpcid: {{vpc_out.vpc.id}}\npubsub1id: {{PubSub1_out.subnet.id}}\npubsub2id: {{PubSub2_out.subnet.id}}\npubsub3id: {{PubSub3_out.subnet.id}}\nprivatesub1id: {{PrivateSub1_out.subnet.id}}\nprivatesub2id: {{PrivateSub2_out.subnet.id}}\nprivatesub3id: {{PrivateSub3_out.subnet.id}}\nigwid: {{igw_out.gateway_id}}\npubRTid: {{PubRouteTable_ansible_out.route_table.id}}\nNATGWid: {{nat_gateway_ansible_out.nat_gateway_id}}\nprivateRTid: {{PrivateRouteTable_ansible_out.route_table.id}}"
+
+
+
+
+
