@@ -142,7 +142,7 @@
       register: PrivateRouteTable_ansible_out
 
     - debug: 
-        var: {{item}}
+        var: "{{item}}"
       loop: 
         - vpc_out.vpc.id
         - PubSub1_out.subnet.id
