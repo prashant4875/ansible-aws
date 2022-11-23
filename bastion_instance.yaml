@@ -47,7 +47,7 @@
         wait: yes
         wait_timeout: 300
         group_id: "{{bastionSG_out.group_id}}"
-        image_id: "{{bastion_ami}}"
+        image: "{{bastion_ami}}"
         exact_count: 1
         tags:
           Name: Bastion-server
