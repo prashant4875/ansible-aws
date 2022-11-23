@@ -1,0 +1,56 @@
+--- 
+- hosts: localhost
+  connection: local
+  gather_facts: False
+  tasks:
+    - name: Import Bastion variables
+      include_vars: vars/bastion_setup
+
+    - name: Import vpc variables
+      include_vars: vars/output_vars
+
+    - name: Create key for bastion instance
+      ec2_key:
+        name: bastion_keyPair
+        region: us-east-1
+      register: bastion_out
+
+    - debug:
+        var: bastion_out
+
+    - name: storing private key content
+      copy:
+        content: "{{bastion_out.key.private_key}}"
+        dest: ./bastion-keyPair.pem
+      when: bastion_out.changed
+
+    - name: Create security group for bastion host 
+      ec2_security_group:
+        name: bastion_SG
+        description: bastion sg 
+        vpc_id: "{{vpcid}}"
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: 0.0.0.0/0
+      register: bastionSG_out
+      
+    - name: Bastion server 
+      ec2_instance:
+        name: "bastion-instance"
+        key_name: bastion_keyPair
+        vpc_subnet_id: "{{pubsub1id}}"
+        instance_type: t2.micro
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        group_id: "{{bastionSG_out.group_id}}"
+        image_id: "{{bastion_ami}}"
+        exact_count: 1
+        tags:
+          Name: Bastion-server
+        count_tag:
+          Name: Bastion-server
+      register: bastion_out
