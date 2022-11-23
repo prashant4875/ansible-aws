@@ -25,7 +25,7 @@
       when: bastion_out.changed
 
     - name: Create security group for bastion host 
-      ec2_security_group:
+      ec2_group:
         name: bastion_SG
         description: bastion sg 
         vpc_id: "{{vpcid}}"
