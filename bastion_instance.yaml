@@ -38,7 +38,7 @@
       register: bastionSG_out
       
     - name: Bastion server 
-      ec2_instance:
+      ec2:
         name: "bastion-instance"
         key_name: bastion_keyPair
         vpc_subnet_id: "{{pubsub1id}}"
