@@ -20,3 +20,46 @@
         content: "{{ec2Stack_out.key.private_key}}"
         dest: ./ec2Stack-keyPair.pem
       when: ec2Stack_out.changed
+
+    - name: Security group for Load Balancer
+      ec2_group:
+        name: ansibleLB_SG
+        description: ansibleLB_SG 
+        vpc_id: "{{vpcid}}"
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            cidr_ip: 0.0.0.0/0
+      register: ansibleLB_SG_out
+
+    - name: Security group for EC2 instances
+      ec2_group:
+        name: ansibleEC2_SG
+        description: ansibleEC2_SG 
+        vpc_id: "{{vpcid}}"
+        purge_rules: no
+        region: "{{region}}"
+        rules:
+          - proto: tcp
+            from_port: 80
+            to_port: 80
+            group_id: "{{ansibleLB_SG_out.group_id}}"
+          - proto: tcp
+            from_port: 22
+            to_port: 22
+            cidr_ip: "{{BastionSGid}}"
+      register: ansibleEC2_SG_out
+    
+    - name: Update Security group for EC2 instances
+      ec2_group:
+        name: ansibleEC2_SG
+        description: ansibleEC2_SG 
+        vpc_id: "{{vpcid}}"
+        purge_rules: no
+        region: "{{region}}"
+        rules:
+          - proto: all
+            group_id: "{{ansibleEC2_SG_out.group_id}}"
+
