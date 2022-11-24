@@ -49,7 +49,7 @@
           - proto: tcp
             from_port: 22
             to_port: 22
-            cidr_ip: "{{BastionSGid}}"
+            group_id: "{{BastionSGid}}"
       register: ansibleEC2_SG_out
     
     - name: Update Security group for EC2 instances
