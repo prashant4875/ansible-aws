@@ -1,0 +1,22 @@
+--- 
+- hosts: localhost
+  connection: local 
+  gather_facts: False 
+  tasks:
+    - name: Import VPC variables file
+      include_vars: vars/output_vars
+
+    - name: Import EC2 AMI variables
+      include_vars: vars/ec2_vars
+
+    - name: Create key for EC2 stack instance
+      ec2_key:
+        name: ec2Stack_keyPair
+        region: "{{region}}"
+      register: ec2Stack_out
+
+    - name: storing private key content
+      copy:
+        content: "{{ec2Stack_out.key.private_key}}"
+        dest: ./ec2Stack-keyPair.pem
+      when: ec2Stack_out.changed
