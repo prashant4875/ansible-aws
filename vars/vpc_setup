@@ -16,3 +16,5 @@ zone2: us-east-1b
 zone3: us-east-1c
 
 state: present
+
+bastion_ami: ami-0b0dcb5067f052a63
