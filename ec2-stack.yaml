@@ -149,5 +149,24 @@
       register: db01_out
 
     - debug: 
-        var: db01_out
+        var: db01_out.tagged_instances[0].id
+
+    - name: Create Load Balancer in aws from ansible
+      ec2_elb_lb:
+        name: "ansibleLB"
+        state: present
+        region: "{{region}}"
+        instance_ids:
+          - "{{web01_out.tagged_instances[0].id}}"
+        purge_instance_ids: true
+        security_group_ids: "{{ansibleLB_SG_out.group_id}}"
+        subnets: 
+          - "{{pubsub1id}}"
+          - "{{pubsub2id}}"
+          - "{{pubsub3id}}"
+        listeners:
+          - protocol: http
+            load_balancer_port: 80
+            instance_port: 80
+      register: ansibleLB_out
 
