@@ -63,3 +63,91 @@
           - proto: all
             group_id: "{{ansibleEC2_SG_out.group_id}}"
 
+    - name: Create Nginx server web01
+      ec2:
+        key_name: ec2Stack_keyPair
+        vpc_subnet_id: "{{privatesub1id}}"
+        instance_type: t2.micro
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        group_id: "{{ansibleEC2_SG_out.group_id}}"
+        image: "{{nginx_ami}}"
+        exact_count: 1
+        instance_tags:
+          Name: web01
+        count_tag:
+          Name: web01
+      register: web01_out
+
+    - name: Create Tomcat server app01
+      ec2:
+        key_name: ec2Stack_keyPair
+        vpc_subnet_id: "{{privatesub1id}}"
+        instance_type: t2.micro
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        group_id: "{{ansibleEC2_SG_out.group_id}}"
+        image: "{{tomcat_ami}}"
+        exact_count: 1
+        instance_tags:
+          Name: app01
+        count_tag:
+          Name: app01
+      register: app01_out
+
+    - name: Create Memcached server mc01
+      ec2:
+        key_name: ec2Stack_keyPair
+        vpc_subnet_id: "{{privatesub1id}}"
+        instance_type: t2.micro
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        group_id: "{{ansibleEC2_SG_out.group_id}}"
+        image: "{{memcached_ami}}"
+        exact_count: 1
+        instance_tags:
+          Name: mc01
+        count_tag:
+          Name: mc01
+      register: mc01_out
+
+    - name: Create RabbitMQ server rmq01
+      ec2:
+        key_name: ec2Stack_keyPair
+        vpc_subnet_id: "{{privatesub1id}}"
+        instance_type: t2.micro
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        group_id: "{{ansibleEC2_SG_out.group_id}}"
+        image: "{{rmq_ami}}"
+        exact_count: 1
+        instance_tags:
+          Name: rmq01
+        count_tag:
+          Name: rmq01
+      register: rmq01_out
+
+    - name: Create MYSQL server db01
+      ec2:
+        key_name: ec2Stack_keyPair
+        vpc_subnet_id: "{{privatesub1id}}"
+        instance_type: t2.micro
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        group_id: "{{ansibleEC2_SG_out.group_id}}"
+        image: "{{mysql_ami}}"
+        exact_count: 1
+        instance_tags:
+          Name: db01
+        count_tag:
+          Name: db01
+      register: db01_out
+
+    - debug: 
+        var: db01_out
+

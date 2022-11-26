@@ -57,6 +57,5 @@
     - name: Insert/Update bastion SG id in output_vars file 
       blockinfile:
         path: vars/output_vars
-        backup: yes
         block: | 
           BastionSGid: "{{bastionSG_out.group_id}}"
