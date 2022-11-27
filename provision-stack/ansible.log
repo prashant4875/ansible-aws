@@ -1,0 +1,37 @@
+2022-11-27 17:09:21,976 p=2378 u=root n=ansible | [WARNING]:  * Failed to parse /root/ansible-aws/provision-stack/inventory-file
+with yaml plugin: We were unable to read either as JSON nor YAML, these are the
+errors we got from each: JSON: Expecting value: line 1 column 1 (char 0)
+Syntax Error while loading YAML.   could not find expected ':'  The error
+appears to be in '/root/ansible-aws/provision-stack/inventory-file': line 9,
+column 1, but may be elsewhere in the file depending on the exact syntax
+problem.  The offending line appears to be:   [websrvgrp] ^ here
+
+2022-11-27 17:09:21,976 p=2378 u=root n=ansible | [WARNING]:  * Failed to parse /root/ansible-aws/provision-stack/inventory-file
+with ini plugin: /root/ansible-aws/provision-stack/inventory-file:2: Expected
+key=value host variable assignment, got: ansible_host:
+
+2022-11-27 17:09:21,977 p=2378 u=root n=ansible | [WARNING]: Unable to parse /root/ansible-aws/provision-stack/inventory-file as
+an inventory source
+
+2022-11-27 17:09:21,977 p=2378 u=root n=ansible | [WARNING]: No inventory was parsed, only implicit localhost is available
+
+2022-11-27 17:09:21,981 p=2378 u=root n=ansible | [WARNING]: provided hosts list is empty, only localhost is available. Note that
+the implicit localhost does not match 'all'
+
+2022-11-27 17:09:22,192 p=2378 u=root n=ansible | PLAY [Generate artifact, copy artifact & sql file to files directory] **********
+2022-11-27 17:09:22,204 p=2378 u=root n=ansible | TASK [Gathering Facts] *********************************************************
+2022-11-27 17:09:24,207 p=2378 u=root n=ansible | ok: [localhost]
+2022-11-27 17:09:24,224 p=2378 u=root n=ansible | TASK [Install jdk, mvn, git] ***************************************************
+2022-11-27 17:09:26,747 p=2378 u=root n=ansible | ok: [localhost] => (item=git)
+2022-11-27 17:10:29,707 p=2378 u=root n=ansible | changed: [localhost] => (item=openjdk-8-jdk)
+2022-11-27 17:10:44,166 p=2378 u=root n=ansible | changed: [localhost] => (item=maven)
+2022-11-27 17:10:44,180 p=2378 u=root n=ansible | TASK [Clone source code from Github] *******************************************
+2022-11-27 17:10:48,999 p=2378 u=root n=ansible | changed: [localhost]
+2022-11-27 17:10:49,011 p=2378 u=root n=ansible | TASK [mvn install command to build artifact] ***********************************
+2022-11-27 17:11:28,894 p=2378 u=root n=ansible | changed: [localhost]
+2022-11-27 17:11:28,916 p=2378 u=root n=ansible | TASK [Copy artifacts to file directory] ****************************************
+2022-11-27 17:11:30,210 p=2378 u=root n=ansible | changed: [localhost] => (item=/root/ansible-aws/provision-stack/ansibleProject-repo/target/vprofile-v2.war)
+2022-11-27 17:11:30,222 p=2378 u=root n=ansible | TASK [Copy SQL file to files directory] ****************************************
+2022-11-27 17:11:30,644 p=2378 u=root n=ansible | changed: [localhost]
+2022-11-27 17:11:30,662 p=2378 u=root n=ansible | PLAY RECAP *********************************************************************
+2022-11-27 17:11:30,662 p=2378 u=root n=ansible | localhost                  : ok=6    changed=5    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
