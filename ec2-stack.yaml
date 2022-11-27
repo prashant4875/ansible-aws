@@ -184,6 +184,7 @@
       copy:
         src: ec2Stack-keyPair.pem
         dest: provision-stack/ec2Stack-keyPair.pem
+        mode: '0400'
 
     - name: Insert/Update Inventory file
       blockinfile:
