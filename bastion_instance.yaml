@@ -54,6 +54,23 @@
           Name: Bastion-server
       register: bastion_out
 
+    - name: Ansible Controller
+      ec2:
+        key_name: devops-project
+        vpc_subnet_id: "{{pubsub2id}}"
+        instance_type: t2.micro
+        region: "{{region}}"
+        wait: yes
+        wait_timeout: 300
+        group_id: "{{bastionSG_out.group_id}}"
+        image: "{{ansible_ami}}"
+        exact_count: 1
+        instance_tags:
+          Name: Ansible-Controller
+        count_tag:
+          Name: Ansible-Controller
+      register: AnsibleController_out
+
     - name: Insert/Update bastion SG id in output_vars file 
       blockinfile:
         path: vars/output_vars

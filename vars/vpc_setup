@@ -18,3 +18,4 @@ zone3: us-east-1c
 state: present
 
 bastion_ami: ami-0b0dcb5067f052a63
+ansible_ami: ami-0255379e299c163a0
